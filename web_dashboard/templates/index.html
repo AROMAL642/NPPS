@@ -1,0 +1,94 @@
+from scapy.all import sniff, IP, TCP, get_if_list, AsyncSniffer
+from collections import defaultdict
+import time
+import os
+import json
+
+# Track IPs and port scans
+scan_tracker = defaultdict(lambda: {'ports': set(), 'last_seen': time.time()})
+blocked_ips = set()
+PORT_SCAN_THRESHOLD = 10
+TIME_WINDOW = 5
+
+# Log files
+LOG_FILE = "log.txt"
+JSON_FILE = "alerts.json"
+
+def log_alert(message, data=None):
+    timestamp = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+    entry = f"[{timestamp}] {message}"
+    print(entry)
+    with open(LOG_FILE, "a") as f:
+        f.write(entry + "\n")
+    if data:
+        with open(JSON_FILE, "a") as jf:
+            json.dump(data, jf)
+            jf.write("\n")
+
+def detect_scan_type(flags):
+    if flags == 0:
+        return "NULL Scan"
+    elif flags == 0x01:
+        return "FIN Scan"
+    elif flags == 0x29:
+        return "XMAS Scan"
+    elif flags == 0x02:
+        return "SYN Scan"
+    else:
+        return None
+
+def block_ip(ip):
+    if ip not in blocked_ips:
+        command = f"iptables -A INPUT -s {ip} -j DROP"
+        result = os.system(command)
+        if result == 0:
+            log_alert(f"[ACTION] Blocked IP {ip}")
+            blocked_ips.add(ip)
+        else:
+            log_alert(f"[ERROR] Failed to block IP {ip}")
+
+def detect_port_scan(packet):
+    if packet.haslayer(IP) and packet.haslayer(TCP):
+        ip = packet[IP].src
+        dport = packet[TCP].dport
+        flags = packet[TCP].flags
+        scan_type = detect_scan_type(flags)
+
+        if scan_type:
+            scan_tracker[ip]['ports'].add(dport)
+            scan_tracker[ip]['last_seen'] = time.time()
+
+            if len(scan_tracker[ip]['ports']) >= PORT_SCAN_THRESHOLD:
+                message = f"{scan_type} detected from {ip} on ports: {list(scan_tracker[ip]['ports'])}"
+                log_alert(message, {
+                    "ip": ip,
+                    "scan_type": scan_type,
+                    "ports": list(scan_tracker[ip]['ports']),
+                    "time": time.time()
+                })
+
+                block_ip(ip)
+                scan_tracker[ip]['ports'].clear()
+
+# Setup interfaces
+interfaces = [iface for iface in get_if_list() if iface != 'any']
+print("[*] Monitoring interfaces:", interfaces)
+
+# Start sniffers
+sniffers = []
+for iface in interfaces:
+    try:
+        sniffer = AsyncSniffer(filter="tcp", prn=detect_port_scan, store=0, iface=iface)
+        sniffer.start()
+        sniffers.append(sniffer)
+    except Exception as e:
+        print(f"[ERROR] Could not start sniffer on {iface}: {e}")
+
+try:
+    while True:
+        time.sleep(1)
+except KeyboardInterrupt:
+    print("\n[*] Stopping sniffers...")
+    for s in sniffers:
+        s.stop()
+    print("[*] Exited cleanly.")
