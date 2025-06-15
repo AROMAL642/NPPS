@@ -30,7 +30,7 @@ def log_alert(message, data=None):
     print(entry)
 
     # Desktop popup
-    show_desktop_notification("Port Scan Alert", message)
+    show_desktop_notification("Attack Alert", message)
 
     # Save to log file
     with open(LOG_FILE, "a") as f:
@@ -53,6 +53,39 @@ def detect_scan_type(flags):
     elif flags == 0x02:
         return "SYN Scan"
     return None
+
+# --- Deep Packet Inspection ---
+def inspect_packet_payload(packet):
+    try:
+        if packet.haslayer(TCP) and hasattr(packet[TCP], "payload"):
+            raw_payload = bytes(packet[TCP].payload)
+
+            # HTTP keyword detection
+            if b"login" in raw_payload or b"password" in raw_payload or b"/admin" in raw_payload:
+                log_alert(f"[DPI] Suspicious HTTP keyword from {packet[IP].src}", {
+                    "ip": packet[IP].src,
+                    "type": "http_inspection",
+                    "content": raw_payload[:100].decode('utf-8', errors='ignore')
+                })
+
+            # FTP detection
+            if packet[TCP].dport == 21 or packet[TCP].sport == 21:
+                if b"USER" in raw_payload or b"PASS" in raw_payload:
+                    log_alert(f"[DPI] FTP credentials leak from {packet[IP].src}", {
+                        "ip": packet[IP].src,
+                        "type": "ftp_auth",
+                        "content": raw_payload.decode('utf-8', errors='ignore')
+                    })
+
+            # Telnet detection
+            if packet[TCP].dport == 23 or packet[TCP].sport == 23:
+                log_alert(f"[DPI] Telnet usage from {packet[IP].src}", {
+                    "ip": packet[IP].src,
+                    "type": "telnet",
+                    "content": raw_payload[:100].decode('utf-8', errors='ignore')
+                })
+    except Exception as e:
+        log_alert(f"[ERROR] DPI failed: {e}")
 
 # --- Unblock IP after timeout ---
 def unblock_ip(ip):
@@ -103,6 +136,9 @@ def detect_port_scan(packet):
                 )
                 block_ip(src_ip)
                 scan_tracker[src_ip]['ports'].clear()
+
+        # Deep Packet Inspection
+        inspect_packet_payload(packet)
 
 # --- Interface Setup ---
 interfaces = [iface for iface in get_if_list() if iface != 'any']

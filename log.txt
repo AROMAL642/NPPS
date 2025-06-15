@@ -204,3 +204,138 @@
 [2025-06-14 14:18:54] SYN Scan detected from 192.168.25.190 on ports: [32, 34, 73, 9, 78, 14, 48, 18, 88, 93]
 [2025-06-14 14:18:55] SYN Scan detected from 192.168.25.190 on ports: [34, 72, 9, 41, 42, 79, 48, 81, 15, 94]
 [2025-06-14 14:18:56] SYN Scan detected from 192.168.25.190 on ports: [67, 72, 41, 42, 15, 79, 81, 82, 28, 94]
+[2025-06-14 14:41:08] SYN Scan detected from 127.0.0.1 on ports: [97, 39, 47, 80, 21, 22, 23, 53, 25, 56]
+[2025-06-14 14:41:10] [ACTION] Blocked IP 127.0.0.1
+[2025-06-14 14:41:10] SYN Scan detected from 127.0.0.1 on ports: [96, 65, 34, 5, 10, 13, 47, 16, 49, 62]
+[2025-06-14 14:41:10] SYN Scan detected from 127.0.0.1 on ports: [35, 5, 38, 75, 18, 87, 26, 60, 95, 63]
+[2025-06-14 14:41:10] SYN Scan detected from 127.0.0.1 on ports: [2, 35, 37, 17, 51, 84, 89, 59, 93, 31]
+[2025-06-14 14:41:10] SYN Scan detected from 127.0.0.1 on ports: [33, 2, 98, 6, 72, 11, 45, 83, 85, 58]
+[2025-06-14 14:41:20] SYN Scan detected from 127.0.0.1 on ports: [40, 11, 79, 80, 81, 82, 23, 53, 22, 21]
+[2025-06-14 14:41:22] SYN Scan detected from 127.0.0.1 on ports: [68, 14, 80, 50, 21, 53, 23, 22, 25, 59]
+[2025-06-14 14:41:23] SYN Scan detected from 127.0.0.1 on ports: [26, 70, 41, 44, 77, 19, 51, 22, 90, 28]
+[2025-06-14 14:41:24] SYN Scan detected from 127.0.0.1 on ports: [26, 70, 41, 44, 77, 51, 20, 19, 90, 28]
+[2025-06-14 14:41:25] SYN Scan detected from 127.0.0.1 on ports: [35, 71, 39, 40, 42, 19, 55, 27, 29, 62]
+[2025-06-14 14:41:26] SYN Scan detected from 127.0.0.1 on ports: [35, 5, 71, 40, 39, 42, 55, 27, 29, 62]
+[2025-06-14 14:41:27] SYN Scan detected from 127.0.0.1 on ports: [96, 65, 69, 39, 7, 73, 81, 54, 61, 30]
+[2025-06-14 14:41:28] SYN Scan detected from 127.0.0.1 on ports: [96, 65, 69, 6, 7, 73, 81, 54, 61, 30]
+[2025-06-14 14:41:29] SYN Scan detected from 127.0.0.1 on ports: [34, 4, 8, 73, 10, 78, 16, 17, 87, 88]
+[2025-06-14 14:41:30] SYN Scan detected from 127.0.0.1 on ports: [97, 34, 4, 8, 10, 78, 16, 17, 87, 88]
+[2025-06-14 14:41:31] SYN Scan detected from 127.0.0.1 on ports: [64, 66, 72, 45, 15, 84, 87, 91, 60, 63]
+[2025-06-14 14:41:32] SYN Scan detected from 127.0.0.1 on ports: [64, 1, 66, 72, 45, 15, 84, 91, 60, 63]
+[2025-06-14 14:41:33] SYN Scan detected from 127.0.0.1 on ports: [32, 76, 18, 83, 52, 93, 56, 58, 63, 31]
+[2025-06-14 14:41:34] SYN Scan detected from 127.0.0.1 on ports: [32, 2, 76, 18, 83, 52, 56, 58, 93, 31]
+[2025-06-14 14:41:35] SYN Scan detected from 127.0.0.1 on ports: [98, 99, 100, 74, 43, 76, 46, 49, 85, 24]
+[2025-06-14 14:41:36] SYN Scan detected from 127.0.0.1 on ports: [98, 99, 100, 74, 43, 46, 49, 85, 24, 94]
+[2025-06-14 14:41:37] SYN Scan detected from 127.0.0.1 on ports: [33, 3, 36, 38, 9, 11, 75, 13, 48, 49]
+[2025-06-14 14:41:38] SYN Scan detected from 127.0.0.1 on ports: [33, 67, 36, 3, 38, 9, 11, 75, 13, 48]
+[2025-06-14 14:41:39] SYN Scan detected from 127.0.0.1 on ports: [89, 75, 12, 47, 79, 82, 86, 57, 92, 95]
+[2025-06-14 14:41:40] SYN Scan detected from 127.0.0.1 on ports: [89, 37, 12, 47, 79, 82, 86, 57, 92, 95]
+[2025-06-14 14:46:10] [ACTION] Unblocked IP 127.0.0.1
+[2025-06-14 14:46:41] SYN Scan detected from 192.168.25.190 on ports: [67, 12, 80, 53, 21, 23, 22, 25, 443, 63]
+[2025-06-14 14:46:42] [ACTION] Blocked IP 192.168.25.190
+[2025-06-14 14:46:44] SYN Scan detected from 192.168.25.190 on ports: [67, 12, 80, 23, 21, 22, 53, 25, 63, 95]
+[2025-06-14 14:46:45] SYN Scan detected from 192.168.25.190 on ports: [65, 98, 4, 71, 72, 42, 17, 23, 87, 56]
+[2025-06-14 14:46:46] SYN Scan detected from 192.168.25.190 on ports: [65, 98, 4, 71, 72, 42, 75, 17, 87, 56]
+[2025-06-14 14:46:47] SYN Scan detected from 192.168.25.190 on ports: [32, 70, 72, 73, 43, 78, 15, 18, 55, 91]
+[2025-06-14 14:46:48] SYN Scan detected from 192.168.25.190 on ports: [32, 70, 73, 43, 78, 15, 18, 55, 91, 94]
+[2025-06-14 14:46:49] SYN Scan detected from 192.168.25.190 on ports: [64, 1, 35, 41, 44, 15, 50, 83, 20, 28]
+[2025-06-14 14:46:49] SYN Scan detected from 192.168.25.190 on ports: [64, 1, 35, 41, 44, 50, 83, 20, 52, 28]
+[2025-06-14 14:46:51] SYN Scan detected from 192.168.25.190 on ports: [96, 97, 99, 60, 46, 82, 24, 88, 28, 29]
+[2025-06-14 14:46:52] SYN Scan detected from 192.168.25.190 on ports: [96, 97, 99, 8, 46, 82, 24, 88, 60, 29]
+[2025-06-14 14:46:53] SYN Scan detected from 192.168.25.190 on ports: [33, 34, 66, 2, 39, 40, 77, 14, 81, 82]
+[2025-06-14 14:46:54] SYN Scan detected from 192.168.25.190 on ports: [33, 34, 66, 2, 39, 40, 77, 14, 81, 61]
+[2025-06-14 14:46:55] SYN Scan detected from 192.168.25.190 on ports: [2, 26, 9, 13, 79, 49, 90, 93, 62, 31]
+[2025-06-14 14:46:56] SYN Scan detected from 192.168.25.190 on ports: [90, 9, 13, 79, 49, 84, 26, 93, 62, 31]
+[2025-06-14 14:46:57] SYN Scan detected from 192.168.25.190 on ports: [37, 6, 7, 10, 45, 13, 47, 48, 57, 59]
+[2025-06-14 14:46:58] SYN Scan detected from 192.168.25.190 on ports: [37, 38, 6, 7, 10, 45, 47, 48, 57, 59]
+[2025-06-14 14:46:59] SYN Scan detected from 192.168.25.190 on ports: [68, 5, 10, 11, 16, 19, 51, 85, 86, 54]
+[2025-06-14 14:47:00] SYN Scan detected from 192.168.25.190 on ports: [68, 5, 11, 76, 16, 51, 19, 85, 86, 54]
+[2025-06-14 14:47:01] SYN Scan detected from 192.168.25.190 on ports: [3, 36, 69, 100, 54, 89, 58, 27, 92, 30]
+[2025-06-14 14:47:02] SYN Scan detected from 192.168.25.190 on ports: [3, 100, 69, 36, 74, 89, 58, 27, 92, 30]
+[2025-06-14 14:47:06] SYN Scan detected from 192.168.25.190 on ports: [3, 42, 80, 23, 53, 21, 22, 25, 90, 92]
+[2025-06-14 14:47:08] SYN Scan detected from 192.168.25.190 on ports: [3, 90, 42, 80, 53, 22, 23, 21, 25, 58]
+[2025-06-14 14:47:09] SYN Scan detected from 192.168.25.190 on ports: [64, 76, 77, 18, 21, 86, 55, 88, 56, 93]
+[2025-06-14 14:47:10] SYN Scan detected from 192.168.25.190 on ports: [64, 76, 77, 18, 84, 86, 55, 56, 88, 93]
+[2025-06-14 14:47:11] SYN Scan detected from 192.168.25.190 on ports: [67, 100, 70, 40, 44, 52, 20, 55, 27, 60]
+[2025-06-14 14:47:12] SYN Scan detected from 192.168.25.190 on ports: [67, 100, 70, 40, 44, 20, 52, 27, 60, 29]
+[2025-06-14 14:47:13] SYN Scan detected from 192.168.25.190 on ports: [66, 35, 70, 7, 8, 41, 74, 46, 85, 24]
+[2025-06-14 14:47:14] SYN Scan detected from 192.168.25.190 on ports: [66, 35, 7, 8, 41, 74, 46, 85, 24, 89]
+[2025-06-14 14:47:15] SYN Scan detected from 192.168.25.190 on ports: [65, 71, 74, 11, 45, 48, 94, 89, 30, 63]
+[2025-06-14 14:47:16] SYN Scan detected from 192.168.25.190 on ports: [65, 98, 71, 72, 11, 45, 48, 30, 94, 63]
+[2025-06-14 14:47:17] SYN Scan detected from 192.168.25.190 on ports: [98, 6, 72, 59, 78, 15, 50, 54, 91, 30]
+[2025-06-14 14:47:18] SYN Scan detected from 192.168.25.190 on ports: [96, 1, 6, 73, 91, 78, 15, 50, 54, 59]
+[2025-06-14 14:47:19] SYN Scan detected from 192.168.25.190 on ports: [96, 1, 2, 33, 69, 5, 12, 82, 54, 61]
+[2025-06-14 14:47:20] SYN Scan detected from 192.168.25.190 on ports: [33, 2, 69, 5, 12, 14, 79, 17, 82, 61]
+[2025-06-14 14:47:21] SYN Scan detected from 192.168.25.190 on ports: [34, 99, 5, 38, 13, 14, 17, 87, 57, 28]
+[2025-06-14 14:47:22] SYN Scan detected from 192.168.25.190 on ports: [34, 99, 38, 13, 16, 49, 51, 87, 57, 28]
+[2025-06-14 14:47:23] SYN Scan detected from 192.168.25.190 on ports: [68, 36, 38, 37, 43, 16, 49, 92, 62, 95]
+[2025-06-14 14:47:24] SYN Scan detected from 192.168.25.190 on ports: [32, 36, 68, 37, 10, 43, 19, 92, 62, 95]
+[2025-06-14 14:47:25] SYN Scan detected from 192.168.25.190 on ports: [97, 4, 39, 10, 75, 81, 19, 83, 26, 92]
+[2025-06-14 14:47:26] SYN Scan detected from 192.168.25.190 on ports: [97, 4, 39, 9, 75, 47, 81, 83, 26, 31]
+[2025-06-15 11:17:54] SYN Scan detected from 192.168.25.190 on ports: [36, 47, 80, 81, 23, 21, 53, 22, 20, 25]
+[2025-06-15 11:17:56] [ACTION] Blocked IP 192.168.25.190
+[2025-06-15 11:17:56] SYN Scan detected from 192.168.25.190 on ports: [37, 71, 9, 10, 77, 81, 83, 55, 91, 60]
+[2025-06-15 11:17:56] SYN Scan detected from 192.168.25.190 on ports: [33, 2, 99, 1, 69, 76, 83, 86, 56, 94]
+[2025-06-15 11:17:57] SYN Scan detected from 192.168.25.190 on ports: [1, 97, 34, 44, 45, 82, 54, 87, 31, 95]
+[2025-06-15 11:17:57] SYN Scan detected from 192.168.25.190 on ports: [66, 35, 40, 42, 46, 51, 85, 87, 27, 30]
+[2025-06-15 11:18:07] SYN Scan detected from 192.168.25.190 on ports: [3, 43, 80, 51, 53, 21, 23, 22, 25, 95]
+[2025-06-15 11:18:09] SYN Scan detected from 192.168.25.190 on ports: [72, 74, 80, 51, 21, 22, 23, 53, 25, 95]
+[2025-06-15 11:18:10] SYN Scan detected from 192.168.25.190 on ports: [96, 66, 35, 98, 4, 7, 84, 56, 25, 31]
+[2025-06-15 11:18:11] SYN Scan detected from 192.168.25.190 on ports: [96, 98, 35, 4, 66, 7, 84, 56, 57, 31]
+[2025-06-15 11:18:12] SYN Scan detected from 192.168.25.190 on ports: [3, 37, 71, 9, 45, 81, 52, 58, 61, 31]
+[2025-06-15 11:18:13] SYN Scan detected from 192.168.25.190 on ports: [3, 37, 71, 41, 9, 45, 81, 52, 58, 61]
+[2025-06-15 11:18:14] SYN Scan detected from 192.168.25.190 on ports: [65, 69, 6, 73, 10, 75, 78, 81, 83, 59]
+[2025-06-15 11:18:15] SYN Scan detected from 192.168.25.190 on ports: [65, 69, 6, 73, 10, 75, 78, 83, 89, 59]
+[2025-06-15 11:18:16] SYN Scan detected from 192.168.25.190 on ports: [33, 69, 8, 11, 43, 76, 18, 19, 55, 94]
+[2025-06-15 11:18:17] SYN Scan detected from 192.168.25.190 on ports: [33, 8, 43, 11, 76, 49, 18, 19, 55, 94]
+[2025-06-15 11:18:18] SYN Scan detected from 192.168.25.190 on ports: [2, 34, 38, 50, 85, 86, 62, 26, 27, 94]
+[2025-06-15 11:18:19] SYN Scan detected from 192.168.25.190 on ports: [2, 34, 38, 50, 85, 86, 26, 27, 93, 62]
+[2025-06-15 11:18:20] SYN Scan detected from 192.168.25.190 on ports: [34, 68, 40, 13, 15, 16, 50, 90, 60, 93]
+[2025-06-15 11:18:21] SYN Scan detected from 192.168.25.190 on ports: [68, 40, 12, 13, 14, 15, 16, 17, 90, 60]
+[2025-06-15 11:18:22] SYN Scan detected from 192.168.25.190 on ports: [1, 100, 14, 15, 79, 17, 24, 29, 30, 63]
+[2025-06-15 11:18:23] SYN Scan detected from 192.168.25.190 on ports: [1, 67, 100, 77, 47, 79, 24, 29, 30, 63]
+[2025-06-15 11:18:24] SYN Scan detected from 192.168.25.190 on ports: [32, 67, 39, 42, 44, 77, 79, 92, 87, 28]
+[2025-06-15 11:18:25] SYN Scan detected from 192.168.25.190 on ports: [64, 32, 39, 42, 44, 46, 92, 87, 91, 28]
+[2025-06-15 11:18:26] SYN Scan detected from 192.168.25.190 on ports: [64, 97, 36, 5, 42, 46, 82, 20, 54, 88]
+[2025-06-15 11:18:27] SYN Scan detected from 192.168.25.190 on ports: [97, 99, 36, 5, 70, 48, 82, 20, 54, 88]
+[2025-06-15 11:22:57] [ACTION] Unblocked IP 192.168.25.190
+[2025-06-15 11:48:06] [DPI] Suspicious HTTP keyword from 127.0.0.1
+[2025-06-15 11:48:08] [DPI] Suspicious HTTP keyword from 127.0.0.1
+[2025-06-15 11:48:57] [DPI] Suspicious HTTP keyword from 127.0.0.1
+[2025-06-15 11:48:57] [DPI] Suspicious HTTP keyword from 127.0.0.1
+[2025-06-15 11:49:15] [DPI] Suspicious HTTP keyword from 127.0.0.1
+[2025-06-15 11:49:15] [DPI] Suspicious HTTP keyword from 127.0.0.1
+[2025-06-15 12:33:53] [DPI] FTP credentials leak from 127.0.0.1
+[2025-06-15 12:33:54] [DPI] FTP credentials leak from 127.0.0.1
+[2025-06-15 12:33:54] [DPI] Suspicious HTTP keyword from 127.0.0.1
+[2025-06-15 12:33:54] [DPI] Suspicious HTTP keyword from 127.0.0.1
+[2025-06-15 12:33:58] [DPI] FTP credentials leak from 127.0.0.1
+[2025-06-15 12:33:59] [DPI] FTP credentials leak from 127.0.0.1
+[2025-06-15 12:47:12] [DPI] Telnet usage from 127.0.0.1
+[2025-06-15 12:47:12] [DPI] Telnet usage from 127.0.0.1
+[2025-06-15 12:47:12] [DPI] Telnet usage from 127.0.0.1
+[2025-06-15 12:47:12] [DPI] Telnet usage from 127.0.0.1
+[2025-06-15 12:48:03] [DPI] Telnet usage from 127.0.0.1
+[2025-06-15 12:48:03] [DPI] Telnet usage from 127.0.0.1
+[2025-06-15 12:48:03] [DPI] Telnet usage from 127.0.0.1
+[2025-06-15 12:48:03] [DPI] Telnet usage from 127.0.0.1
+[2025-06-15 12:48:56] [DPI] Telnet usage from 192.168.25.190
+[2025-06-15 12:48:59] [DPI] Telnet usage from 192.168.25.190
+[2025-06-15 12:48:59] [DPI] Telnet usage from 192.168.25.190
+[2025-06-15 12:48:59] [DPI] Telnet usage from 192.168.25.190
+[2025-06-15 12:48:59] SYN Scan detected from 192.168.25.190 on ports: [66, 37, 8, 80, 23, 53, 21, 22, 25, 95]
+[2025-06-15 12:48:59] [ACTION] Blocked IP 192.168.25.190
+[2025-06-15 12:48:59] SYN Scan detected from 192.168.25.190 on ports: [1, 99, 8, 72, 12, 47, 54, 24, 58, 59]
+[2025-06-15 12:48:59] SYN Scan detected from 192.168.25.190 on ports: [36, 70, 6, 41, 77, 45, 54, 55, 90, 30]
+[2025-06-15 12:49:00] SYN Scan detected from 192.168.25.190 on ports: [98, 6, 42, 76, 16, 17, 81, 84, 88, 92]
+[2025-06-15 12:49:13] [DPI] Telnet usage from 127.0.0.1
+[2025-06-15 12:49:13] [DPI] Telnet usage from 127.0.0.1
+[2025-06-15 12:49:13] [DPI] Telnet usage from 127.0.0.1
+[2025-06-15 12:49:13] [DPI] Telnet usage from 127.0.0.1
+[2025-06-15 12:49:25] [DPI] FTP credentials leak from 127.0.0.1
+[2025-06-15 12:49:25] [DPI] FTP credentials leak from 127.0.0.1
+[2025-06-15 12:49:25] [DPI] Suspicious HTTP keyword from 127.0.0.1
+[2025-06-15 12:49:25] [DPI] Suspicious HTTP keyword from 127.0.0.1
+[2025-06-15 12:49:30] [DPI] FTP credentials leak from 127.0.0.1
+[2025-06-15 12:49:30] [DPI] FTP credentials leak from 127.0.0.1
+[2025-06-15 12:51:06] SYN Scan detected from 192.168.25.190 on ports: [35, 40, 75, 44, 16, 48, 50, 19, 85, 443]
