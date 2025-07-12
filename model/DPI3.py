@@ -7,190 +7,152 @@ print("Path to dataset files:", path)
 
 
 
+# STEP 1: Install required packages
+!pip install -q tf2onnx joblib
 
-import numpy as np # linear algebra
-import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
+# STEP 2: Imports
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import joblib
+import tensorflow as tf
+from tensorflow.keras import layers, models, callbacks
+from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import confusion_matrix, classification_report, roc_curve, auc
+from google.colab import files
 
-# Input data files are available in the read-only "../input/" directory
-# For example, running this (by clicking run or pressing Shift+Enter) will list all files under the input directory
-
-import os
-for dirname, _, filenames in os.walk('/kaggle/input'):
-    for filename in filenames:
-        print(os.path.join(dirname, filename))
-
+# STEP 3: Load Dataset
 file_path = '/kaggle/input/network-intrusion-dataset/Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv'
 df = pd.read_csv(file_path)
 
+# STEP 4: Rename columns and trim whitespace
 df.columns = df.columns.str.strip()
-print(df.head())
 
-print(df.columns)
+# STEP 5: Define subset of CIC features that are compatible with NFStreamer
+features = [
+    'Flow Duration', 'Total Fwd Packets', 'Total Backward Packets',
+    'Total Length of Fwd Packets', 'Total Length of Bwd Packets',
+    'Flow IAT Mean', 'Flow IAT Std', 'Flow IAT Max', 'Flow IAT Min',
+    'Fwd IAT Total', 'Fwd IAT Mean', 'Fwd IAT Std', 'Fwd IAT Max', 'Fwd IAT Min',
+    'Bwd IAT Total', 'Bwd IAT Mean', 'Bwd IAT Std', 'Bwd IAT Max', 'Bwd IAT Min',
+    'Fwd Packet Length Mean', 'Bwd Packet Length Mean',
+    'Destination Port'
+]
 
+# STEP 6: Subset and preprocess
+df = df[features + ['Label']].copy()
+df.replace([np.inf, -np.inf], np.nan, inplace=True)
+df.dropna(inplace=True)
 
-import matplotlib.pyplot as plt
-
-label_counts = df['Label'].value_counts()
-print("Distribution of Classes:")
-print(label_counts)
-
-normal_count = label_counts.get('BENIGN', 0)
-attack_count = label_counts.sum() - normal_count
-
-print(f"\nNormal Connections (BENIGN): {normal_count}")
-print(f"Attacks (of all types): {attack_count}")
-
-
-label_counts = df['Label'].value_counts()
-
-benign_count = label_counts.get('BENIGN', 0)
-
-attack_counts = label_counts.drop('BENIGN')
-
-plot_labels = ['BENIGN'] + attack_counts.index.tolist()
-plot_sizes = [benign_count] + attack_counts.values.tolist()
-
-plt.figure(figsize=(10,10))
-plt.pie(plot_sizes, labels=plot_labels, autopct='%1.1f%%', startangle=90)
-plt.title('Connection Types Distribution')
-plt.show()
-
-
-
-
-from sklearn.preprocessing import StandardScaler
-from tensorflow.keras import layers, models, callbacks
-
-df.columns = df.columns.str.strip()
-features = df.columns.tolist()
-features.remove('Label')
-
-train_df = df[df['Label'] == 'BENIGN'].copy()
-train_features = train_df[features]
-
-train_features.replace([np.inf, -np.inf], np.nan, inplace=True)
-
-train_features = train_features.fillna(train_features.median())
-
-test_df = df.copy()
-test_features = test_df[features]
-test_features.replace([np.inf, -np.inf], np.nan, inplace=True)
-test_features = test_features.fillna(test_features.median())
-
-print("Train NaNs:", train_features.isna().sum().sum())
-print("Train Infs:", np.isinf(train_features.values).sum())
-print("Test NaNs:", test_features.isna().sum().sum())
-print("Test Infs:", np.isinf(test_features.values).sum())
+# STEP 7: Encode labels & scale features
+df['Label'] = df['Label'].str.strip()
+X = df[features].astype(np.float32)
+y = df['Label']
 
 scaler = StandardScaler()
-X_train_scaled = scaler.fit_transform(train_features)
-X_test_scaled = scaler.transform(test_features)
+X_scaled = scaler.fit_transform(X)
 
-print(X_train_scaled.shape, X_test_scaled.shape)
+# Save original features list
+joblib.dump(features, 'features.pkl')
 
-input_dim = X_train_scaled.shape[1]
+# Save scaler
+joblib.dump(scaler, 'scaler.pkl')
 
+# STEP 8: Separate BENIGN for training
+X_train = X_scaled[y == 'BENIGN']
+X_test = X_scaled
+y_true = (y != 'BENIGN').astype(int)
+
+print("X_train shape:", X_train.shape)
+print("X_test shape:", X_test.shape)
+
+# STEP 9: Build Autoencoder
+input_dim = X_train.shape[1]
 input_layer = layers.Input(shape=(input_dim,))
 
-encoded = layers.Dense(256)(input_layer)
-encoded = layers.LeakyReLU(alpha=0.1)(encoded)
-encoded = layers.BatchNormalization()(encoded)
-encoded = layers.Dropout(0.3)(encoded)
+encoded = layers.Dense(64, activation='relu')(input_layer)
+encoded = layers.Dense(32, activation='relu')(encoded)
 
-encoded = layers.Dense(128)(encoded)
-encoded = layers.LeakyReLU(alpha=0.1)(encoded)
-encoded = layers.BatchNormalization()(encoded)
-encoded = layers.Dropout(0.3)(encoded)
-
-encoded = layers.Dense(64)(encoded)
-encoded = layers.LeakyReLU(alpha=0.1)(encoded)
-encoded = layers.BatchNormalization()(encoded)
-encoded = layers.Dropout(0.2)(encoded)
-
-encoded = layers.Dense(32)(encoded)
-encoded = layers.LeakyReLU(alpha=0.1)(encoded)
-
-decoded = layers.Dense(64)(encoded)
-decoded = layers.LeakyReLU(alpha=0.1)(decoded)
-decoded = layers.BatchNormalization()(decoded)
-decoded = layers.Dropout(0.2)(decoded)
-
-decoded = layers.Dense(128)(decoded)
-decoded = layers.LeakyReLU(alpha=0.1)(decoded)
-decoded = layers.BatchNormalization()(decoded)
-decoded = layers.Dropout(0.3)(decoded)
-
-decoded = layers.Dense(256)(decoded)
-decoded = layers.LeakyReLU(alpha=0.1)(decoded)
-decoded = layers.BatchNormalization()(decoded)
-decoded = layers.Dropout(0.3)(decoded)
-
+decoded = layers.Dense(64, activation='relu')(encoded)
 decoded = layers.Dense(input_dim, activation='linear')(decoded)
 
 autoencoder = models.Model(inputs=input_layer, outputs=decoded)
 autoencoder.compile(optimizer='adam', loss='mse')
-autoencoder.summary()
 
-early_stop = callbacks.EarlyStopping(monitor='val_loss', patience=10, restore_best_weights=True)
+# STEP 10: Train Autoencoder
+early_stop = callbacks.EarlyStopping(monitor='val_loss', patience=5, restore_best_weights=True)
 
 history = autoencoder.fit(
-    X_train_scaled, X_train_scaled,
+    X_train, X_train,
     epochs=100,
     batch_size=64,
     validation_split=0.1,
-    shuffle=True,
-    callbacks=[early_stop]
+    callbacks=[early_stop],
+    verbose=1
 )
 
-X_test_pred = autoencoder.predict(X_test_scaled)
-mse = np.mean(np.power(X_test_scaled - X_test_pred, 2), axis=1)
-
-X_train_pred = autoencoder.predict(X_train_scaled)
-mse_train = np.mean(np.power(X_train_scaled - X_train_pred, 2), axis=1)
 
 
 
 
 
-X_test_pred = autoencoder.predict(X_test_scaled)
+# STEP 11: Predict & Threshold (Eager mode to avoid optree error)
+print("Shape of X_train before prediction:", X_train.shape)
 
-mse = np.mean(np.power(X_test_scaled - X_test_pred, 2), axis=1)
+# ✅ Check for any corruption
+assert not np.isnan(X_train).any(), "NaNs in X_train"
+assert not np.isinf(X_train).any(), "Infs in X_train"
 
-X_train_pred = autoencoder.predict(X_train_scaled)
-mse_train = np.mean(np.power(X_train_scaled - X_train_pred, 2), axis=1)
+# ✅ Predict using eager mode
+X_train_pred = autoencoder(X_train, training=False).numpy()
+X_test_pred = autoencoder(X_test, training=False).numpy()
+
+mse_train = np.mean(np.power(X_train - X_train_pred, 2), axis=1)
+mse_test = np.mean(np.power(X_test - X_test_pred, 2), axis=1)
 
 threshold = np.percentile(mse_train, 95)
-print(f"Reconstruction Error Threshold (95th Percentile): {threshold}")
+print(f"Reconstruction Threshold (95th percentile): {threshold:.6f}")
 
-y_true = (df['Label'] != 'BENIGN').astype(int)
+joblib.dump(threshold, 'threshold.txt')
 
-y_pred = (mse > threshold).astype(int)
+
+# STEP 12: Evaluate
+y_pred = (mse_test > threshold).astype(int)
+
 print("Confusion Matrix:")
 print(confusion_matrix(y_true, y_pred))
 
 print("\nClassification Report:")
-print(classification_report(y_true, y_pred, target_names=['Normal', 'Anomalie']))
+print(classification_report(y_true, y_pred))
 
-cm = confusion_matrix(y_true, y_pred)
-
-plt.figure(figsize=(6,5))
-sns.heatmap(cm, annot=True, fmt='d', cmap='Blues',
-            xticklabels=['Normal (0)', 'Anomaly (1)'],
-            yticklabels=['Normal (0)', 'Anomaly (1)'])
-plt.xlabel('Predicted Class')
-plt.ylabel('True Class')
-plt.title('Confusion Matrix')
-plt.show()
-
-
-fpr, tpr, thresholds = roc_curve(y_true, mse)
+# STEP 13: ROC Curve
+fpr, tpr, _ = roc_curve(y_true, mse_test)
 roc_auc = auc(fpr, tpr)
 
-plt.figure(figsize=(8,6))
+plt.figure(figsize=(8, 6))
 plt.plot(fpr, tpr, label=f'ROC Curve (AUC = {roc_auc:.3f})')
-plt.plot([0,1], [0,1], 'k--', label='Random')
-plt.xlabel('False Positive Rate (FPR)')
-plt.ylabel('True Positive Rate (TPR)')
-plt.title('ROC Curve for Anomaly Detection')
-plt.legend(loc='lower right')
+plt.plot([0, 1], [0, 1], 'k--')
+plt.xlabel('False Positive Rate')
+plt.ylabel('True Positive Rate')
+plt.title('ROC Curve')
+plt.legend()
+plt.grid(True)
 plt.show()
+
+# STEP 14: Save Keras model
+autoencoder.save('autoencoder_model.h5')
+
+# STEP 15: Convert to ONNX using tf2onnx
+import tf2onnx
+
+spec = (tf.TensorSpec((None, input_dim), tf.float32, name="input"),)
+onnx_model, _ = tf2onnx.convert.from_keras(autoencoder, input_signature=spec, opset=13, output_path="autoencoder_model.onnx")
+
+# STEP 16: Download all files
+files.download("autoencoder_model.onnx")
+files.download("scaler.pkl")
+files.download("features.pkl")
+with open("threshold.txt", "w") as f:
+    f.write(str(threshold))
+files.download("threshold.txt")
